@@ -1,0 +1,50 @@
+[tool.poetry]
+name = "architecture-patterns-with-python"
+version = "0.1.0"
+description = ""
+authors = ["Sebastian Derendarz <sebastian.derendarz@gmail.com>"]
+# If you want to install multiple packages from the nested project structure,
+# you must explicitly specify each package. Tried wildcard, did not work.
+packages = [
+    {include = "api", from = "src"},
+    {include = "base", from = "src"},
+    {include = "cache", from = "src"},
+    {include = "database", from = "src"},
+    {include = "mailing", from = "src"},
+    {include = "trading_assets", from = "src"}
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+alembic = "^1.9.4"
+sqlalchemy = "^2.0.4"
+psycopg2-binary = "^2.9.5"
+pydantic = "^1.10.5"
+injector = "^0.20.1"
+fastapi = "^0.92.0"
+uvicorn = "^0.20.0"
+redis = "^4.5.1"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.1"
+black = "^23.1.0"
+isort = "^5.12.0"
+ruff = "^0.0.247"
+
+
+[tool.black]
+target_version = ["py311"]
+
+[tool.isort]
+profile = "black"
+
+[tool.ruff]
+# The same as black
+line-length = 88
+target-version = "py311"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

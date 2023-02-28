@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "bab2bfc8-5c00-4ae9-9728-32a8644ca9bc",
+		"name": "Architecture Patterns With Python",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14931162"
+	},
+	"item": [
+		{
+			"name": "Add Trading Asset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"1\",\n    \"full_name\": \"Bitcoin\",\n    \"iso_code\": \"BTC\",\n    \"tags\": [\"cool\", \"growing\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/v1/trading_asset/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"trading_asset",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Trading Asset",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"1\",\n    \"full_name\": \"Bitcoin\",\n    \"iso_code\": \"BTC\",\n    \"tags\": [\"cool\", \"growing\", \"prime\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/v1/trading_asset/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"trading_asset",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Trading Asset",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/v1/trading_asset/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"trading_asset",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Trading Asset Request",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/v1/trading_asset/command/a9b5b6de-d02f-435c-a200-f03660e8a10d",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"trading_asset",
+						"command",
+						"a9b5b6de-d02f-435c-a200-f03660e8a10d"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

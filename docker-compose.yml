@@ -1,0 +1,84 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: api-image
+    depends_on:
+      - postgres
+      - redis
+    command: ["uvicorn", "--factory", "api.cli:app_factory", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - CONFIG_PATH=/app/docker.ini
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./docker.ini:/app/docker.ini
+      - ./scripts:/app/scripts
+      - ./src:/app/src
+      - ./tests:/app/tests
+
+  customer_care_notifications_worker:
+    image: api-image
+    depends_on:
+      - redis
+    command: ["python", "/app/src/mailing/consumers/customer_care_notifications.py"]
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - CHANNEL_NAME=customer_care_notifications
+      - CONFIG_PATH=/app/docker.ini
+    volumes:
+      - ./docker.ini:/app/docker.ini
+      - ./src:/app/src
+
+  trading_assets_cache_worker:
+    image: api-image
+    depends_on:
+      - redis
+    command: ["python", "/app/src/cache/consumers/trading_assets_cache.py"]
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - CHANNEL_NAME=trading_assets_cache
+      - CONFIG_PATH=/app/docker.ini
+    volumes:
+      - ./docker.ini:/app/docker.ini
+      - ./src:/app/src
+
+  trading_assets_commands_log_worker:
+    image: api-image
+    depends_on:
+      - redis
+    command: ["python", "/app/src/trading_assets/consumers/trading_assets_commands_log.py"]
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - CHANNEL_NAME=trading_assets_commands_log
+      - CONFIG_PATH=/app/docker.ini
+    volumes:
+      - ./docker.ini:/app/docker.ini
+      - ./src:/app/src
+
+  postgres:
+    image: postgres:15.2
+    environment:
+      - POSTGRES_USER=archipatterns
+      - POSTGRES_PASSWORD=itsasecret
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
